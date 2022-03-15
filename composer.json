@@ -1,6 +1,6 @@
 {
-    "name": "jfussion/terminus-cse_tools",
-    "description": "Terminus tools for CSE",
+    "name": "geraldvillorente/terminus-cse_tools",
+    "description": "A tool for sweeping/cleaning users dashboard by removing thememselves from the site and delete owned frozen site.",
     "type": "terminus-plugin",
     "autoload": {
         "psr-4": { "Pantheon\\TerminusCseTools\\": "src" }

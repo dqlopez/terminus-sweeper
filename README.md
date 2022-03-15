@@ -35,5 +35,10 @@ For help installing, see [Manage Plugins](https://pantheon.io/docs/terminus/plug
 ```
 mkdir -p ~/.terminus/plugins
 cd ~/.terminus/plugins
-git clone https://github.com/jfussion/terminus-cse-tools.git
+git clone https://github.com/pantheon-systems/terminus-sweeper.git
+```
+
+In Terminus 3, you can install this plugin by running:
+```
+terminus self:plugin:install geraldvillorente/terminus-sweeper
 ```
