@@ -1,5 +1,5 @@
 {
-    "name": "geraldvillorente/terminus-cse_tools",
+    "name": "geraldvillorente/terminus-sweeper",
     "description": "A tool for sweeping/cleaning users dashboard by removing thememselves from the site and delete owned frozen site.",
     "type": "terminus-plugin",
     "autoload": {
