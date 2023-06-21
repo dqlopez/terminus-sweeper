@@ -12,45 +12,49 @@ class SweepSitesCommand extends SweepCommand
      * @alias sweep
      */
     public function sweepSite() {
-      $output = $this->output();
-      $user = $this->session()->getUser();
-
-      $output->writeln('<info>Gathering sites...</>');
-      $output->writeln('<info>======================================</>');
-      $this->sites()->fetch(['team_only' => true]);
-
-      // Get remove sites owned by me.
-      $me = $user->id;
-      $this->sites->filter(function($model) use ($me) {
-        if ($model->get('owner') != $me) {
-          return true;
-        }
-      });
-
-      $sites = $this->sites->serialize();
-
-      if (empty($sites)) {
-        $this->log()->notice('No results');
-      }
-      else {
-        // List all the sites.
-        foreach($sites as $site) {
-          $output->writeln($site['name']);
-        }
-        // Proceed with removing self to the team.
-        if (!$this->confirm('Are you sure you want to remove yourself to these sites?')) {
-          return;
-        }
-        foreach ($sites as $site_id => $value) {
-          // Terminus api is returning a null site_id. Skip if empty.
-          if (empty($site_id)) {
-            continue;
+      if ($this->session()->isActive()) {
+        $output = $this->output();
+        $user = $this->session()->getUser();
+  
+        $output->writeln('<info>Gathering sites...</>');
+        $output->writeln('<info>======================================</>');
+        $this->sites()->fetch(['team_only' => true]);
+  
+        // Get remove sites owned by me.
+        $me = $user->id;
+        $this->sites->filter(function($model) use ($me) {
+          if ($model->get('owner') != $me) {
+            return true;
           }
-          $output->write("Leaving " . $value['name'] . " site... ");
-          $workflow = $this->getSite($site_id)->getUserMemberships()->get($me)->delete();
-          $output->writeln("<info>Done!</>");
+        });
+  
+        $sites = $this->sites->serialize();
+  
+        if (empty($sites)) {
+          $this->log()->notice('No results');
         }
-        $this->log()->notice('Success!');
+        else {
+          // List all the sites.
+          foreach($sites as $site) {
+            $output->writeln($site['name']);
+          }
+          // Proceed with removing self to the team.
+          if (!$this->confirm('Are you sure you want to remove yourself to these sites?')) {
+            return;
+          }
+          foreach ($sites as $site_id => $value) {
+            // Terminus api is returning a null site_id. Skip if empty.
+            if (empty($site_id)) {
+              continue;
+            }
+            $output->write("Leaving " . $value['name'] . " site... ");
+            $workflow = $this->getSite($site_id)->getUserMemberships()->get($me)->delete();
+            $output->writeln("<info>Done!</>");
+          }
+          $this->log()->notice('Success!');
+        }
+      } else {
+          $this->log()->notice('You are not logged in.');
       }
     }
 }
