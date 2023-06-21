@@ -7,6 +7,8 @@ class FrozenSitesCommand extends SweepCommand
 {
   /**
    * Sweep/Delete frozen sites.
+   * 
+   * @authorize
    *
    * @command sweep:frozen
    */

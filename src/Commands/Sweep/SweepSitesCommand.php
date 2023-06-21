@@ -7,6 +7,8 @@ class SweepSitesCommand extends SweepCommand
 {
     /**
      * Leave client's site.
+     * 
+     * @authorize
      *
      * @command sweep:sites
      * @alias sweep
